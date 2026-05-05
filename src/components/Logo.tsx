@@ -6,7 +6,7 @@ export const Logo = ({ className = "h-12", iconOnly = false }: { className?: str
       <LogoIcon className="h-full w-auto" />
     </span>
   ) : (
-    <img src={logo} alt="Piazza Aldeota" className={`${className} w-auto object-contain`} />
+    <img src={logo} alt="Piazza Aldeota" className={`${className} w-auto object-contain rounded-2xl`} />
   );
 
 export const LogoIcon = ({ className = "h-10 w-10" }: { className?: string }) => (
