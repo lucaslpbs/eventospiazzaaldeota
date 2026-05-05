@@ -290,30 +290,92 @@ const TestimonialsEditor = () => {
   );
 };
 
+const isYtUrl = (url: string) => url.includes("youtube") || url.includes("youtu.be");
+
 const AvulsosEditor = () => {
   const [v, setV, save] = useContent<AvulsosContent>("avulsos_videos", DEFAULT_AVULSOS);
+  const [uploading, setUploading] = useState<Partial<Record<keyof AvulsosContent, boolean>>>({});
+
   const labels: Record<keyof AvulsosContent, string> = {
     aud_roof: "Auditório + Rooftop",
     auditorio: "Auditório",
     rooftop: "Rooftop",
   };
+
+  const handleUpload = async (k: keyof AvulsosContent, file: File) => {
+    setUploading((prev) => ({ ...prev, [k]: true }));
+    const ext = file.name.split(".").pop();
+    const path = `avulsos/${crypto.randomUUID()}.${ext}`;
+    const { error } = await supabase.storage.from("piazza-media").upload(path, file);
+    setUploading((prev) => ({ ...prev, [k]: false }));
+    if (error) { toast.error(error.message); return; }
+    const url = supabase.storage.from("piazza-media").getPublicUrl(path).data.publicUrl;
+    save({ ...v, [k]: url });
+  };
+
+  const clear = (k: keyof AvulsosContent) => save({ ...v, [k]: "" });
+
   return (
     <div>
       <h2 className="font-display text-4xl mb-2">Vídeos — Espaços Avulsos</h2>
       <div className="gold-line w-24 mb-8" />
-      <div className={`${card} space-y-4`}>
-        <p className="text-sm text-cream/60">Cole a URL do YouTube para cada espaço. Deixe em branco para usar a imagem padrão.</p>
-        {(Object.keys(labels) as (keyof AvulsosContent)[]).map((k) => (
-          <Field key={k} label={`Vídeo — ${labels[k]}`}>
-            <input
-              className={input}
-              placeholder="https://www.youtube.com/watch?v=..."
-              value={v[k]}
-              onChange={(e) => setV({ ...v, [k]: e.target.value })}
-            />
-          </Field>
-        ))}
-        <button className="btn-gold" onClick={() => save(v)}>Salvar</button>
+      <div className="space-y-6">
+        {(Object.keys(labels) as (keyof AvulsosContent)[]).map((k) => {
+          const cur = v[k] || "";
+          const ytActive = isYtUrl(cur);
+          const mp4Active = !!cur && !ytActive;
+          return (
+            <div key={k} className={card}>
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="font-display text-2xl">{labels[k]}</h3>
+                {cur && (
+                  <button onClick={() => clear(k)} className="text-xs text-destructive flex items-center gap-1 hover:opacity-80">
+                    <Trash2 size={12} /> Remover vídeo
+                  </button>
+                )}
+              </div>
+
+              <Field label="URL do YouTube">
+                <input
+                  className={`${input} ${mp4Active ? "opacity-40 cursor-not-allowed" : ""}`}
+                  placeholder="https://www.youtube.com/watch?v=..."
+                  value={ytActive ? cur : ""}
+                  disabled={mp4Active}
+                  onChange={(e) => setV({ ...v, [k]: e.target.value })}
+                />
+              </Field>
+
+              {ytActive && (
+                <button className="btn-gold mt-3" onClick={() => save(v)}>Salvar URL</button>
+              )}
+
+              <div className="flex items-center gap-4 my-5">
+                <div className="flex-1 border-t border-accent/20" />
+                <span className="text-xs text-cream/50 uppercase tracking-widest">ou</span>
+                <div className="flex-1 border-t border-accent/20" />
+              </div>
+
+              <Field label="Enviar vídeo MP4">
+                <div className={ytActive ? "opacity-40 pointer-events-none" : ""}>
+                  {mp4Active && (
+                    <p className="text-xs text-accent mb-3">✓ Vídeo MP4 salvo no servidor</p>
+                  )}
+                  <label className={`btn-gold inline-flex cursor-pointer ${uploading[k] ? "opacity-60 pointer-events-none" : ""}`}>
+                    <Plus size={16} />
+                    {uploading[k] ? "Enviando..." : mp4Active ? "Trocar vídeo MP4" : "Escolher arquivo MP4"}
+                    <input
+                      type="file"
+                      accept="video/mp4,video/*"
+                      className="hidden"
+                      disabled={ytActive || !!uploading[k]}
+                      onChange={(e) => { if (e.target.files?.[0]) handleUpload(k, e.target.files[0]); e.target.value = ""; }}
+                    />
+                  </label>
+                </div>
+              </Field>
+            </div>
+          );
+        })}
       </div>
     </div>
   );

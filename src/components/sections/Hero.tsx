@@ -2,7 +2,15 @@ import { motion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 import { DEFAULT_HERO, useSiteContent, type HeroContent } from "@/lib/site-content";
 
-const split = (txt: string) => txt.split("");
+const splitByWords = (txt: string) => {
+  const words = txt.split(" ");
+  let idx = 0;
+  return words.map((word) => {
+    const start = idx;
+    idx += word.length + 1;
+    return { word, start };
+  });
+};
 
 export const Hero = () => {
   const [hero] = useSiteContent<HeroContent>("hero", DEFAULT_HERO);
@@ -50,17 +58,25 @@ export const Hero = () => {
           ✦ Aldeota · Fortaleza ✦
         </motion.div>
 
-        <h1 className="font-display text-cream text-5xl md:text-7xl lg:text-8xl leading-[1.05] max-w-5xl text-balance">
-          {split(hero.headline).map((c, i) => (
-            <motion.span
-              key={i}
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 + i * 0.025, duration: 0.5 }}
-              className="inline-block"
+        <h1 className="font-display text-cream text-5xl md:text-7xl lg:text-8xl leading-[1.05] max-w-5xl">
+          {splitByWords(hero.headline).map(({ word, start }, wi, arr) => (
+            <span
+              key={wi}
+              className="whitespace-nowrap inline-block"
+              style={{ marginRight: wi < arr.length - 1 ? "0.3em" : 0 }}
             >
-              {c === " " ? "\u00A0" : c}
-            </motion.span>
+              {word.split("").map((c, ci) => (
+                <motion.span
+                  key={ci}
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3 + (start + ci) * 0.025, duration: 0.5 }}
+                  className="inline-block"
+                >
+                  {c}
+                </motion.span>
+              ))}
+            </span>
           ))}
         </h1>
 
