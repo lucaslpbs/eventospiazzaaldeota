@@ -7,14 +7,31 @@ const split = (txt: string) => txt.split("");
 export const Hero = () => {
   const [hero] = useSiteContent<HeroContent>("hero", DEFAULT_HERO);
 
+  const ytId = (() => {
+    const url = hero.video_url || "";
+    const m = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/)([A-Za-z0-9_-]{11})/);
+    return m ? m[1] : null;
+  })();
+
   return (
     <section id="top" className="relative h-screen min-h-[640px] w-full overflow-hidden clip-wave-b">
-      <video
-        key={hero.video_url}
-        src={hero.video_url}
-        autoPlay muted loop playsInline
-        className="absolute inset-0 w-full h-full object-cover"
-      />
+      {ytId ? (
+        <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none">
+          <iframe
+            key={ytId}
+            src={`https://www.youtube.com/embed/${ytId}?autoplay=1&mute=1&loop=1&controls=0&showinfo=0&modestbranding=1&playsinline=1&rel=0&playlist=${ytId}`}
+            allow="autoplay; encrypted-media"
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[177.78vh] h-[56.25vw] min-w-full min-h-full border-0"
+          />
+        </div>
+      ) : (
+        <video
+          key={hero.video_url}
+          src={hero.video_url}
+          autoPlay muted loop playsInline
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+      )}
       <div className="absolute inset-0 bg-gradient-hero" />
       <div className="absolute inset-0 bg-charcoal/30" />
 
