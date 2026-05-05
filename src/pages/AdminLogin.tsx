@@ -43,7 +43,7 @@ const AdminLogin = () => {
   return (
     <div className="min-h-screen bg-charcoal text-cream flex items-center justify-center p-6 leaf-bg">
       <div className="w-full max-w-md glass-dark rounded-3xl p-10 shadow-teal">
-        <div className="flex justify-center mb-6"><Logo className="h-16 brightness-0 invert" /></div>
+        <div className="flex justify-center mb-6"><Logo className="h-16" /></div>
         <h1 className="font-display text-3xl text-center mb-2">Painel Admin</h1>
         <div className="gold-divider" />
         <form onSubmit={submit} className="mt-8 space-y-4">

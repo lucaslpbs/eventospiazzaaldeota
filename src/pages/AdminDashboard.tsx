@@ -45,7 +45,7 @@ const AdminDashboard = () => {
   return (
     <div className="min-h-screen bg-charcoal text-cream flex flex-col md:flex-row">
       <aside className="md:w-72 bg-primary/40 border-r border-accent/20 p-6 flex md:flex-col">
-        <div className="hidden md:block mb-8"><Logo className="h-12 brightness-0 invert" /></div>
+        <div className="hidden md:block mb-8"><Logo className="h-12" /></div>
         <nav className="flex md:flex-col gap-1 flex-1 overflow-x-auto">
           {NAV.map((n) => (
             <button key={n.id} onClick={() => setSection(n.id)}

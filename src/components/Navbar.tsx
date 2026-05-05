@@ -31,7 +31,7 @@ export const Navbar = () => {
       <div className="container flex items-center justify-between">
         <a href="#top" className="flex items-center gap-3">
           <span className="hidden md:block">
-            <Logo className="h-11 brightness-0 invert" />
+            <Logo className="h-11" />
           </span>
           <span className="md:hidden">
             <LogoIcon className="h-10 w-10" />

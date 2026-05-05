@@ -6,7 +6,7 @@ export const Footer = () => (
   <footer className="bg-charcoal text-cream py-16">
     <div className="container text-center">
       <div className="flex justify-center mb-6">
-        <Logo className="h-14 brightness-0 invert" />
+        <Logo className="h-14" />
       </div>
       <nav className="flex flex-wrap justify-center gap-x-8 gap-y-3 text-sm uppercase tracking-[0.18em] text-cream/80 mb-8">
         <a href="#espacos" className="hover:text-accent transition-colors">Espaços</a>
