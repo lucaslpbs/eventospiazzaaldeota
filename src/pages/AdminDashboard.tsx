@@ -3,19 +3,20 @@ import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Logo } from "@/components/Logo";
 import { toast } from "sonner";
-import { Film, Image as ImageIcon, Images, DollarSign, Phone, MessageSquare, LogOut, Plus, Trash2 } from "lucide-react";
+import { Film, Image as ImageIcon, Images, DollarSign, Phone, MessageSquare, LogOut, Plus, Trash2, Video } from "lucide-react";
 import {
-  DEFAULT_HERO, DEFAULT_PRICES, DEFAULT_CONTACT, DEFAULT_SPACES,
-  type HeroContent, type Prices, type ContactContent, type SpacesContent,
+  DEFAULT_HERO, DEFAULT_PRICES, DEFAULT_CONTACT, DEFAULT_SPACES, DEFAULT_AVULSOS,
+  type HeroContent, type Prices, type ContactContent, type SpacesContent, type AvulsosContent,
 } from "@/lib/site-content";
 
-type Section = "hero" | "spaces" | "gallery" | "prices" | "contact" | "testimonials";
+type Section = "hero" | "spaces" | "gallery" | "prices" | "contact" | "testimonials" | "avulsos";
 
 const NAV: { id: Section; label: string; Icon: any }[] = [
   { id: "hero", label: "Hero", Icon: Film },
   { id: "spaces", label: "Imagens dos Espaços", Icon: ImageIcon },
   { id: "gallery", label: "Galeria", Icon: Images },
   { id: "prices", label: "Preços", Icon: DollarSign },
+  { id: "avulsos", label: "Vídeos Avulsos", Icon: Video },
   { id: "contact", label: "Contato", Icon: Phone },
   { id: "testimonials", label: "Depoimentos", Icon: MessageSquare },
 ];
@@ -72,6 +73,7 @@ const AdminDashboard = () => {
         {section === "spaces" && <SpacesEditor />}
         {section === "gallery" && <GalleryEditor />}
         {section === "prices" && <PricesEditor />}
+        {section === "avulsos" && <AvulsosEditor />}
         {section === "contact" && <ContactEditor />}
         {section === "testimonials" && <TestimonialsEditor />}
       </main>
@@ -283,6 +285,35 @@ const TestimonialsEditor = () => {
             <button onClick={() => del(t.id)} className="text-destructive text-sm flex items-center gap-1 self-start"><Trash2 size={14}/> Excluir</button>
           </div>
         ))}
+      </div>
+    </div>
+  );
+};
+
+const AvulsosEditor = () => {
+  const [v, setV, save] = useContent<AvulsosContent>("avulsos_videos", DEFAULT_AVULSOS);
+  const labels: Record<keyof AvulsosContent, string> = {
+    aud_roof: "Auditório + Rooftop",
+    auditorio: "Auditório",
+    rooftop: "Rooftop",
+  };
+  return (
+    <div>
+      <h2 className="font-display text-4xl mb-2">Vídeos — Espaços Avulsos</h2>
+      <div className="gold-line w-24 mb-8" />
+      <div className={`${card} space-y-4`}>
+        <p className="text-sm text-cream/60">Cole a URL do YouTube para cada espaço. Deixe em branco para usar a imagem padrão.</p>
+        {(Object.keys(labels) as (keyof AvulsosContent)[]).map((k) => (
+          <Field key={k} label={`Vídeo — ${labels[k]}`}>
+            <input
+              className={input}
+              placeholder="https://www.youtube.com/watch?v=..."
+              value={v[k]}
+              onChange={(e) => setV({ ...v, [k]: e.target.value })}
+            />
+          </Field>
+        ))}
+        <button className="btn-gold" onClick={() => save(v)}>Salvar</button>
       </div>
     </div>
   );
