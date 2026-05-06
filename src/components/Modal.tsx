@@ -18,7 +18,7 @@ export const Modal = ({ open, onClose, children, dark = true }: {
     };
   }, [open, onClose]);
 
-  return (
+  return createPortal(
     <AnimatePresence>
       {open && (
         <motion.div
@@ -44,6 +44,7 @@ export const Modal = ({ open, onClose, children, dark = true }: {
           </div>
         </motion.div>
       )}
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body
   );
 };
