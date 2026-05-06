@@ -18,7 +18,7 @@ export const WHATSAPP_URL = "https://wa.me/5585989801309";
 export const INSTAGRAM_URL = "https://instagram.com/piazzaaldeota";
 
 export const DEFAULT_HERO: HeroContent = {
-  video_url: "https://www.w3schools.com/html/mov_bbb.mp4",
+  video_url: "https://www.youtube.com/watch?v=aSBLj1RGIzw",
   headline: "Onde cada detalhe transforma o seu evento.",
   subtext: "Auditório · Rooftop · Coffee Break Premium — Aldeota, Fortaleza",
 };
