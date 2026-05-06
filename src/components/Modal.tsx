@@ -1,6 +1,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
 import { useEffect } from "react";
+import { createPortal } from "react-dom";
 
 export const Modal = ({ open, onClose, children, dark = true }: {
   open: boolean; onClose: () => void; children: React.ReactNode; dark?: boolean;
