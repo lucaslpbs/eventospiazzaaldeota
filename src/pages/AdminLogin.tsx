@@ -8,7 +8,6 @@ const AdminLogin = () => {
   const nav = useNavigate();
   const [email, setEmail] = useState("");
   const [pwd, setPwd] = useState("");
-  const [mode, setMode] = useState<"login" | "signup">("login");
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -21,18 +20,9 @@ const AdminLogin = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      if (mode === "signup") {
-        const { error } = await supabase.auth.signUp({
-          email, password: pwd,
-          options: { emailRedirectTo: `${window.location.origin}/admin/dashboard` },
-        });
-        if (error) throw error;
-        toast.success("Conta criada! Peça a um admin existente para liberar acesso.");
-      } else {
-        const { error } = await supabase.auth.signInWithPassword({ email, password: pwd });
-        if (error) throw error;
-        nav("/admin/dashboard");
-      }
+      const { error } = await supabase.auth.signInWithPassword({ email, password: pwd });
+      if (error) throw error;
+      nav("/admin/dashboard");
     } catch (e: any) {
       toast.error(e.message);
     } finally {
@@ -58,11 +48,7 @@ const AdminLogin = () => {
               className="w-full bg-charcoal/60 border border-accent/30 rounded-xl px-4 py-3 focus:border-accent outline-none" />
           </div>
           <button disabled={loading} className="btn-gold w-full">
-            {loading ? "..." : mode === "login" ? "Entrar" : "Criar conta"}
-          </button>
-          <button type="button" onClick={() => setMode(mode === "login" ? "signup" : "login")}
-            className="block w-full text-center text-accent/80 text-sm hover:text-accent">
-            {mode === "login" ? "Criar uma conta" : "Já tenho conta"}
+            {loading ? "..." : "Entrar"}
           </button>
         </form>
       </div>

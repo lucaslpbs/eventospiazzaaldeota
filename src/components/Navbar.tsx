@@ -44,7 +44,6 @@ export const Navbar = () => {
               {l.label}
             </a>
           ))}
-          <Link to="/admin" className="text-accent/70 hover:text-accent text-xs uppercase tracking-widest">Admin</Link>
         </nav>
 
         <a href="https://wa.me/5585989801309" target="_blank" rel="noreferrer" className="hidden lg:inline-flex btn-gold !py-2.5 !px-5 text-sm">
@@ -64,7 +63,6 @@ export const Navbar = () => {
                 {l.label}
               </a>
             ))}
-            <Link to="/admin" onClick={() => setOpen(false)} className="text-accent py-2">Admin</Link>
             <a href="https://wa.me/5585989801309" className="btn-gold mt-2">Falar no WhatsApp</a>
           </div>
         </div>
