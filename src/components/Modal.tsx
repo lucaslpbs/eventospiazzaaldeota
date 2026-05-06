@@ -40,6 +40,7 @@ export const Modal = ({ open, onClose, children, dark = true }: {
             </button>
             {children}
           </motion.div>
+          </div>
         </motion.div>
       )}
     </AnimatePresence>
