@@ -22,15 +22,16 @@ export const Modal = ({ open, onClose, children, dark = true }: {
       {open && (
         <motion.div
           initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-          className="fixed inset-0 z-[100] overflow-y-auto"
+          className="fixed inset-0 z-[100] overflow-y-auto overscroll-contain"
         >
-          <div className="absolute inset-0 bg-charcoal/80 backdrop-blur-sm" onClick={onClose} />
+          <div className="fixed inset-0 bg-charcoal/80 backdrop-blur-sm" onClick={onClose} />
+          <div className="relative min-h-full flex items-start sm:items-center justify-center p-4 sm:p-6">
           <motion.div
             initial={{ scale: 0.95, opacity: 0, y: 20 }}
             animate={{ scale: 1, opacity: 1, y: 0 }}
             exit={{ scale: 0.95, opacity: 0, y: 20 }}
             transition={{ duration: 0.3 }}
-            className={`relative my-4 md:my-12 mx-auto max-w-4xl rounded-3xl border border-accent/30 shadow-teal overflow-hidden ${
+            className={`relative w-full max-w-4xl my-auto rounded-3xl border border-accent/30 shadow-teal overflow-hidden ${
               dark ? "bg-charcoal text-cream" : "bg-background text-foreground"
             }`}
           >
