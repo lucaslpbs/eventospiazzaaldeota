@@ -23,7 +23,7 @@ export const Hero = () => {
 
   return (
     <section id="top" className="relative h-screen min-h-[640px] w-full overflow-hidden clip-wave-b">
-      {ytId ? (
+      {ytId && (
         <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none">
           <iframe
             key={ytId}
@@ -32,13 +32,6 @@ export const Hero = () => {
             className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[177.78vh] h-[56.25vw] min-w-full min-h-full border-0"
           />
         </div>
-      ) : (
-        <video
-          key={hero.video_url}
-          src={hero.video_url}
-          autoPlay muted loop playsInline
-          className="absolute inset-0 w-full h-full object-cover"
-        />
       )}
       <div className="absolute inset-0 bg-gradient-hero" />
       <div className="absolute inset-0 bg-charcoal/30" />
