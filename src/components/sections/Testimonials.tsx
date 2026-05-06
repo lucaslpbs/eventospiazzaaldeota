@@ -1,18 +1,24 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Star } from "lucide-react";
+import useEmblaCarousel from "embla-carousel-react";
+import AutoScroll from "embla-carousel-auto-scroll";
 import { supabase } from "@/integrations/supabase/client";
 
 type T = { id: string; name: string; company: string | null; stars: number; quote: string; avatar_url: string | null };
 
 export const Testimonials = () => {
   const [items, setItems] = useState<T[]>([]);
+  const [emblaRef] = useEmblaCarousel(
+    { loop: true, dragFree: true, align: "start" },
+    [AutoScroll({ speed: 1, stopOnInteraction: false, stopOnMouseEnter: true })]
+  );
+
   useEffect(() => {
     supabase.from("testimonials").select("*").order("position").then(({ data }) => setItems(data ?? []));
   }, []);
 
   if (!items.length) return null;
-  const loop = [...items, ...items];
 
   return (
     <section className="relative py-28 bg-charcoal text-cream overflow-hidden">
@@ -22,10 +28,10 @@ export const Testimonials = () => {
         <div className="gold-divider" />
       </div>
 
-      <div className="relative group">
-        <div className="flex gap-6 animate-marquee group-hover:[animation-play-state:paused] w-max">
-          {loop.map((t, i) => (
-            <motion.div key={i} className="w-[360px] glass-dark rounded-3xl p-8 flex-shrink-0">
+      <div className="overflow-hidden cursor-grab active:cursor-grabbing" ref={emblaRef}>
+        <div className="flex gap-6 px-6">
+          {items.map((t, i) => (
+            <motion.div key={i} className="w-[320px] sm:w-[360px] glass-dark rounded-3xl p-8 flex-shrink-0 select-none">
               <div className="flex gap-1 mb-4 text-accent">
                 {Array.from({ length: t.stars }).map((_, j) => <Star key={j} size={16} fill="currentColor" />)}
               </div>
