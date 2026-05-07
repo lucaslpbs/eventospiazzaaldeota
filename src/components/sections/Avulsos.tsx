@@ -2,7 +2,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Modal } from "../Modal";
 import { Users } from "lucide-react";
-import { DEFAULT_PRICES, DEFAULT_AVULSOS, fmt, useSiteContent, type Prices, type AvulsosContent } from "@/lib/site-content";
+import { DEFAULT_PRICES, DEFAULT_AVULSOS, DEFAULT_CAPACITIES, fmt, useSiteContent, type Prices, type AvulsosContent, type CapacitiesContent } from "@/lib/site-content";
 
 const getYtId = (url: string) => {
   const m = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/)([A-Za-z0-9_-]{11})/);
