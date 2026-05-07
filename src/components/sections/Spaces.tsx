@@ -41,13 +41,14 @@ const SpaceModal = ({ open, onClose, name, capacity, badge, desc, features, imag
 export const Spaces = () => {
   const [open, setOpen] = useState<null | "aud" | "roof">(null);
   const [spaces] = useSiteContent<SpacesContent>("spaces", DEFAULT_SPACES);
+  const [caps] = useSiteContent<CapacitiesContent>("capacities", DEFAULT_CAPACITIES);
 
   const audImgs = spaces.auditorio.length ? spaces.auditorio : auditorioImgs;
   const roofImgs = spaces.rooftop.length ? spaces.rooftop : rooftopImgs;
 
   const cards = [
-    { id: "aud", title: "Auditório", img: audImgs[0], capacity: "100 pessoas", tag: "Climatizado" },
-    { id: "roof", title: "Rooftop", img: roofImgs[0], capacity: "60 pessoas", tag: "Vista panorâmica" },
+    { id: "aud", title: "Auditório", img: audImgs[0], capacity: `${caps.auditorio} pessoas`, tag: "Climatizado" },
+    { id: "roof", title: "Rooftop", img: roofImgs[0], capacity: `${caps.rooftop} pessoas`, tag: "Vista panorâmica" },
   ] as const;
 
   return (
