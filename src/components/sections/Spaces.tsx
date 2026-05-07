@@ -2,7 +2,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Modal } from "../Modal";
 import { Projector, Mic, Snowflake, Armchair, Wind, Eye, Wine, Lamp, Users } from "lucide-react";
-import { DEFAULT_SPACES, useSiteContent, type SpacesContent } from "@/lib/site-content";
+import { DEFAULT_SPACES, DEFAULT_CAPACITIES, useSiteContent, type SpacesContent, type CapacitiesContent } from "@/lib/site-content";
 
 const auditorioImgs = [1, 2, 3, 4].map(i => `https://picsum.photos/1200/700?random=${30 + i}`);
 const rooftopImgs = [1, 2, 3, 4].map(i => `https://picsum.photos/1200/700?random=${40 + i}`);
