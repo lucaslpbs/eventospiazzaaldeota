@@ -21,8 +21,9 @@ const Counter = ({ to, suffix = "" }: { to: number; suffix?: string }) => {
 };
 
 export const Highlights = () => {
+  const [caps] = useSiteContent<CapacitiesContent>("capacities", DEFAULT_CAPACITIES);
   const items = [
-    { n: 100, label: "pessoas", caption: "Capacidade total do auditório" },
+    { n: caps.auditorio, label: "pessoas", caption: "Capacidade total do auditório" },
     { n: 2, label: "espaços", caption: "Auditório + Rooftop premium" },
     { n: 3, label: "opções", caption: "Coffee breaks Bronze · Prata · Ouro" },
   ];
