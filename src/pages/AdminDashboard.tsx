@@ -3,19 +3,20 @@ import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Logo } from "@/components/Logo";
 import { toast } from "sonner";
-import { Film, Image as ImageIcon, Images, DollarSign, Phone, MessageSquare, LogOut, Plus, Trash2, Video } from "lucide-react";
+import { Film, Image as ImageIcon, Images, DollarSign, Phone, MessageSquare, LogOut, Plus, Trash2, Video, Users } from "lucide-react";
 import {
-  DEFAULT_HERO, DEFAULT_PRICES, DEFAULT_CONTACT, DEFAULT_SPACES, DEFAULT_AVULSOS,
-  type HeroContent, type Prices, type ContactContent, type SpacesContent, type AvulsosContent,
+  DEFAULT_HERO, DEFAULT_PRICES, DEFAULT_CONTACT, DEFAULT_SPACES, DEFAULT_AVULSOS, DEFAULT_CAPACITIES,
+  type HeroContent, type Prices, type ContactContent, type SpacesContent, type AvulsosContent, type CapacitiesContent,
 } from "@/lib/site-content";
 
-type Section = "hero" | "spaces" | "gallery" | "prices" | "contact" | "testimonials" | "avulsos";
+type Section = "hero" | "spaces" | "gallery" | "prices" | "contact" | "testimonials" | "avulsos" | "capacities";
 
 const NAV: { id: Section; label: string; Icon: any }[] = [
   { id: "hero", label: "Hero", Icon: Film },
   { id: "spaces", label: "Imagens dos Espaços", Icon: ImageIcon },
   { id: "gallery", label: "Galeria", Icon: Images },
   { id: "prices", label: "Preços", Icon: DollarSign },
+  { id: "capacities", label: "Capacidades", Icon: Users },
   { id: "avulsos", label: "Vídeos Avulsos", Icon: Video },
   { id: "contact", label: "Contato", Icon: Phone },
   { id: "testimonials", label: "Depoimentos", Icon: MessageSquare },
