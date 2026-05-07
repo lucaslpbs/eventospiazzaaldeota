@@ -75,6 +75,7 @@ const AdminDashboard = () => {
         {section === "gallery" && <GalleryEditor />}
         {section === "prices" && <PricesEditor />}
         {section === "avulsos" && <AvulsosEditor />}
+        {section === "capacities" && <CapacitiesEditor />}
         {section === "contact" && <ContactEditor />}
         {section === "testimonials" && <TestimonialsEditor />}
       </main>
