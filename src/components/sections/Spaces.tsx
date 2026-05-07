@@ -106,7 +106,7 @@ export const Spaces = () => {
       />
       <SpaceModal
         open={open === "roof"} onClose={() => setOpen(null)}
-        name="Rooftop" capacity="60 pessoas" badge="🌆 Vista panorâmica"
+        name="Rooftop" capacity={`${caps.rooftop} pessoas`} badge="🌆 Vista panorâmica"
         images={roofImgs}
         desc="Terraço aberto com vista deslumbrante da Aldeota — perfeito para coquetéis, jantares íntimos, casamentos boutique e celebrações ao entardecer."
         features={[
