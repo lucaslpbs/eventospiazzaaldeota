@@ -36,6 +36,7 @@ export const DEFAULT_PRICES: Prices = {
 };
 export const DEFAULT_SPACES: SpacesContent = { auditorio: [], rooftop: [] };
 export const DEFAULT_AVULSOS: AvulsosContent = { aud_roof: "", auditorio: "", rooftop: "" };
+export const DEFAULT_CAPACITIES: CapacitiesContent = { auditorio: 100, rooftop: 60, aud_roof: 60 };
 
 export function useSiteContent<T>(key: string, fallback: T) {
   const [data, setData] = useState<T>(fallback);
