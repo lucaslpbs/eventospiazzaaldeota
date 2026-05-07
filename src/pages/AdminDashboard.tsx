@@ -383,6 +383,35 @@ const AvulsosEditor = () => {
   );
 };
 
+const CapacitiesEditor = () => {
+  const [v, setV, save] = useContent<CapacitiesContent>("capacities", DEFAULT_CAPACITIES);
+  const labels: Record<keyof CapacitiesContent, string> = {
+    auditorio: "Auditório",
+    rooftop: "Rooftop",
+    aud_roof: "Auditório + Rooftop (avulso)",
+  };
+  return (
+    <div>
+      <h2 className="font-display text-4xl mb-2">Capacidades</h2>
+      <div className="gold-line w-24 mb-8" />
+      <div className={`${card} space-y-4`}>
+        {(Object.keys(labels) as (keyof CapacitiesContent)[]).map((k) => (
+          <Field key={k} label={`${labels[k]} — pessoas`}>
+            <input
+              type="number"
+              min="1"
+              className={input}
+              value={v[k]}
+              onChange={(e) => setV({ ...v, [k]: parseInt(e.target.value) || 0 })}
+            />
+          </Field>
+        ))}
+        <button className="btn-gold" onClick={() => save(v)}>Salvar</button>
+      </div>
+    </div>
+  );
+};
+
 const Field = ({ label, children }: any) => (
   <label className="block">
     <div className="text-xs uppercase tracking-widest text-cream/70 mb-2">{label}</div>
