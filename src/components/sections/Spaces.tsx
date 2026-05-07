@@ -94,7 +94,7 @@ export const Spaces = () => {
 
       <SpaceModal
         open={open === "aud"} onClose={() => setOpen(null)}
-        name="Auditório" capacity="100 pessoas" badge="❄ Climatizado"
+        name="Auditório" capacity={`${caps.auditorio} pessoas`} badge="❄ Climatizado"
         images={audImgs}
         desc="Auditório versátil e climatizado, projetado para palestras corporativas, treinamentos, lançamentos e cerimônias. Ambiente sofisticado com acústica cuidada e iluminação ajustável."
         features={[
