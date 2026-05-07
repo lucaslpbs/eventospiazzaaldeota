@@ -13,6 +13,7 @@ export type HeroContent = { video_url: string; headline: string; subtext: string
 export type ContactContent = { phone: string; whatsapp: string; instagram: string; address: string };
 export type SpacesContent = { auditorio: string[]; rooftop: string[] };
 export type AvulsosContent = { aud_roof: string; auditorio: string; rooftop: string };
+export type CapacitiesContent = { auditorio: number; rooftop: number; aud_roof: number };
 
 export const WHATSAPP_URL = "https://wa.me/5585989801309";
 export const INSTAGRAM_URL = "https://instagram.com/piazzaaldeota";
@@ -35,6 +36,7 @@ export const DEFAULT_PRICES: Prices = {
 };
 export const DEFAULT_SPACES: SpacesContent = { auditorio: [], rooftop: [] };
 export const DEFAULT_AVULSOS: AvulsosContent = { aud_roof: "", auditorio: "", rooftop: "" };
+export const DEFAULT_CAPACITIES: CapacitiesContent = { auditorio: 100, rooftop: 60, aud_roof: 60 };
 
 export function useSiteContent<T>(key: string, fallback: T) {
   const [data, setData] = useState<T>(fallback);

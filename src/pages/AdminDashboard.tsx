@@ -3,19 +3,20 @@ import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Logo } from "@/components/Logo";
 import { toast } from "sonner";
-import { Film, Image as ImageIcon, Images, DollarSign, Phone, MessageSquare, LogOut, Plus, Trash2, Video } from "lucide-react";
+import { Film, Image as ImageIcon, Images, DollarSign, Phone, MessageSquare, LogOut, Plus, Trash2, Video, Users } from "lucide-react";
 import {
-  DEFAULT_HERO, DEFAULT_PRICES, DEFAULT_CONTACT, DEFAULT_SPACES, DEFAULT_AVULSOS,
-  type HeroContent, type Prices, type ContactContent, type SpacesContent, type AvulsosContent,
+  DEFAULT_HERO, DEFAULT_PRICES, DEFAULT_CONTACT, DEFAULT_SPACES, DEFAULT_AVULSOS, DEFAULT_CAPACITIES,
+  type HeroContent, type Prices, type ContactContent, type SpacesContent, type AvulsosContent, type CapacitiesContent,
 } from "@/lib/site-content";
 
-type Section = "hero" | "spaces" | "gallery" | "prices" | "contact" | "testimonials" | "avulsos";
+type Section = "hero" | "spaces" | "gallery" | "prices" | "contact" | "testimonials" | "avulsos" | "capacities";
 
 const NAV: { id: Section; label: string; Icon: any }[] = [
   { id: "hero", label: "Hero", Icon: Film },
   { id: "spaces", label: "Imagens dos Espaços", Icon: ImageIcon },
   { id: "gallery", label: "Galeria", Icon: Images },
   { id: "prices", label: "Preços", Icon: DollarSign },
+  { id: "capacities", label: "Capacidades", Icon: Users },
   { id: "avulsos", label: "Vídeos Avulsos", Icon: Video },
   { id: "contact", label: "Contato", Icon: Phone },
   { id: "testimonials", label: "Depoimentos", Icon: MessageSquare },
@@ -74,6 +75,7 @@ const AdminDashboard = () => {
         {section === "gallery" && <GalleryEditor />}
         {section === "prices" && <PricesEditor />}
         {section === "avulsos" && <AvulsosEditor />}
+        {section === "capacities" && <CapacitiesEditor />}
         {section === "contact" && <ContactEditor />}
         {section === "testimonials" && <TestimonialsEditor />}
       </main>
@@ -376,6 +378,35 @@ const AvulsosEditor = () => {
             </div>
           );
         })}
+      </div>
+    </div>
+  );
+};
+
+const CapacitiesEditor = () => {
+  const [v, setV, save] = useContent<CapacitiesContent>("capacities", DEFAULT_CAPACITIES);
+  const labels: Record<keyof CapacitiesContent, string> = {
+    auditorio: "Auditório",
+    rooftop: "Rooftop",
+    aud_roof: "Auditório + Rooftop (avulso)",
+  };
+  return (
+    <div>
+      <h2 className="font-display text-4xl mb-2">Capacidades</h2>
+      <div className="gold-line w-24 mb-8" />
+      <div className={`${card} space-y-4`}>
+        {(Object.keys(labels) as (keyof CapacitiesContent)[]).map((k) => (
+          <Field key={k} label={`${labels[k]} — pessoas`}>
+            <input
+              type="number"
+              min="1"
+              className={input}
+              value={v[k]}
+              onChange={(e) => setV({ ...v, [k]: parseInt(e.target.value) || 0 })}
+            />
+          </Field>
+        ))}
+        <button className="btn-gold" onClick={() => save(v)}>Salvar</button>
       </div>
     </div>
   );

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Modal } from "../Modal";
 import { Projector, Mic, Snowflake, Armchair, Wind, Eye, Wine, Lamp, Users } from "lucide-react";
-import { DEFAULT_SPACES, useSiteContent, type SpacesContent } from "@/lib/site-content";
+import { DEFAULT_SPACES, DEFAULT_CAPACITIES, useSiteContent, type SpacesContent, type CapacitiesContent } from "@/lib/site-content";
 
 const auditorioImgs = [1, 2, 3, 4].map(i => `https://picsum.photos/1200/700?random=${30 + i}`);
 const rooftopImgs = [1, 2, 3, 4].map(i => `https://picsum.photos/1200/700?random=${40 + i}`);
@@ -41,13 +41,14 @@ const SpaceModal = ({ open, onClose, name, capacity, badge, desc, features, imag
 export const Spaces = () => {
   const [open, setOpen] = useState<null | "aud" | "roof">(null);
   const [spaces] = useSiteContent<SpacesContent>("spaces", DEFAULT_SPACES);
+  const [caps] = useSiteContent<CapacitiesContent>("capacities", DEFAULT_CAPACITIES);
 
   const audImgs = spaces.auditorio.length ? spaces.auditorio : auditorioImgs;
   const roofImgs = spaces.rooftop.length ? spaces.rooftop : rooftopImgs;
 
   const cards = [
-    { id: "aud", title: "Auditório", img: audImgs[0], capacity: "100 pessoas", tag: "Climatizado" },
-    { id: "roof", title: "Rooftop", img: roofImgs[0], capacity: "60 pessoas", tag: "Vista panorâmica" },
+    { id: "aud", title: "Auditório", img: audImgs[0], capacity: `${caps.auditorio} pessoas`, tag: "Climatizado" },
+    { id: "roof", title: "Rooftop", img: roofImgs[0], capacity: `${caps.rooftop} pessoas`, tag: "Vista panorâmica" },
   ] as const;
 
   return (
@@ -93,7 +94,7 @@ export const Spaces = () => {
 
       <SpaceModal
         open={open === "aud"} onClose={() => setOpen(null)}
-        name="Auditório" capacity="100 pessoas" badge="❄ Climatizado"
+        name="Auditório" capacity={`${caps.auditorio} pessoas`} badge="❄ Climatizado"
         images={audImgs}
         desc="Auditório versátil e climatizado, projetado para palestras corporativas, treinamentos, lançamentos e cerimônias. Ambiente sofisticado com acústica cuidada e iluminação ajustável."
         features={[
@@ -105,7 +106,7 @@ export const Spaces = () => {
       />
       <SpaceModal
         open={open === "roof"} onClose={() => setOpen(null)}
-        name="Rooftop" capacity="60 pessoas" badge="🌆 Vista panorâmica"
+        name="Rooftop" capacity={`${caps.rooftop} pessoas`} badge="🌆 Vista panorâmica"
         images={roofImgs}
         desc="Terraço aberto com vista deslumbrante da Aldeota — perfeito para coquetéis, jantares íntimos, casamentos boutique e celebrações ao entardecer."
         features={[
