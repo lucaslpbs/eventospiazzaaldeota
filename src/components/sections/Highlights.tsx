@@ -1,5 +1,6 @@
 import { motion, useInView, useMotionValue, animate } from "framer-motion";
 import { useEffect, useRef } from "react";
+import { DEFAULT_CAPACITIES, useSiteContent, type CapacitiesContent } from "@/lib/site-content";
 
 const Counter = ({ to, suffix = "" }: { to: number; suffix?: string }) => {
   const ref = useRef<HTMLSpanElement>(null);
