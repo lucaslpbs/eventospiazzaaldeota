@@ -49,15 +49,16 @@ export const Avulsos = () => {
   const [open, setOpen] = useState<null | string>(null);
   const [prices] = useSiteContent<Prices>("prices", DEFAULT_PRICES);
   const [videos] = useSiteContent<AvulsosContent>("avulsos_videos", DEFAULT_AVULSOS);
+  const [caps] = useSiteContent<CapacitiesContent>("capacities", DEFAULT_CAPACITIES);
 
   const items = [
-    { id: "aud_roof", title: "Auditório + Rooftop", capacity: "60 pessoas", price: prices.avulsos.aud_roof,
+    { id: "aud_roof", title: "Auditório + Rooftop", capacity: `${caps.aud_roof} pessoas`, price: prices.avulsos.aud_roof,
       img: "https://oowncafdgqroyqfamzpr.supabase.co/storage/v1/object/public/piazza-media/avulsos/c860cec1-6d55-4bdb-bcc0-1d3b13df1fc4.mp4",
       desc: "Combo completo dos dois espaços para eventos que pedem amplitude e versatilidade.", code: "Produto 02" },
-    { id: "auditorio", title: "Auditório", capacity: "100 pessoas", price: prices.avulsos.auditorio,
+    { id: "auditorio", title: "Auditório", capacity: `${caps.auditorio} pessoas`, price: prices.avulsos.auditorio,
       img: "https://oowncafdgqroyqfamzpr.supabase.co/storage/v1/object/public/piazza-media/avulsos/5f97ea37-04b0-4840-a874-3b8acfa50abf.mp4",
       desc: "Auditório climatizado, ideal para palestras, treinamentos e apresentações.", code: "Produto 03" },
-    { id: "rooftop", title: "Rooftop", capacity: "60 pessoas", price: prices.avulsos.rooftop,
+    { id: "rooftop", title: "Rooftop", capacity: `${caps.rooftop} pessoas`, price: prices.avulsos.rooftop,
       img: "https://oowncafdgqroyqfamzpr.supabase.co/storage/v1/object/public/piazza-media/avulsos/949d505c-7492-486b-ac68-0f9664cf22fe.mp4",
       desc: "Rooftop com vista panorâmica para coquetéis, jantares e celebrações ao ar livre.", code: "Produto 04" },
   ];
