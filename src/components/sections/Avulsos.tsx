@@ -12,6 +12,7 @@ const getYtId = (url: string) => {
 const MediaCard = ({ url, img, title, className = "" }: { url: string; img: string; title: string; className?: string }) => {
   const ytId = getYtId(url);
   const isDirect = url && !ytId;
+  const isFallbackVideo = !url && /\.mp4(\?|$)/i.test(img);
   if (ytId) return (
     <iframe
       src={`https://www.youtube.com/embed/${ytId}?autoplay=1&mute=1&loop=1&controls=0&modestbranding=1&playsinline=1&rel=0&playlist=${ytId}`}
@@ -24,18 +25,23 @@ const MediaCard = ({ url, img, title, className = "" }: { url: string; img: stri
   if (isDirect) return (
     <video src={url} autoPlay muted loop playsInline className={`w-full h-full object-cover ${className}`} />
   );
+  if (isFallbackVideo) return (
+    <video src={img} autoPlay muted loop playsInline className={`w-full h-full object-cover ${className}`} />
+  );
   return <img src={img} alt={title} className={`w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ${className}`} />;
 };
 
 const MediaModal = ({ url, img, title }: { url: string; img: string; title: string }) => {
   const ytId = getYtId(url);
   const isDirect = url && !ytId;
+  const isFallbackVideo = !url && /\.mp4(\?|$)/i.test(img);
   if (ytId) return (
     <div className="w-full h-72 bg-charcoal">
       <iframe src={`https://www.youtube.com/embed/${ytId}?controls=1`} className="w-full h-full" allowFullScreen title={title} />
     </div>
   );
   if (isDirect) return <video src={url} controls className="w-full h-72 object-cover" />;
+  if (isFallbackVideo) return <video src={img} controls className="w-full h-72 object-cover" />;
   return <img src={img} alt="" className="w-full h-72 object-cover" />;
 };
 
@@ -46,13 +52,13 @@ export const Avulsos = () => {
 
   const items = [
     { id: "aud_roof", title: "Auditório + Rooftop", capacity: "60 pessoas", price: prices.avulsos.aud_roof,
-      img: "https://picsum.photos/800/600?random=51",
+      img: "https://oowncafdgqroyqfamzpr.supabase.co/storage/v1/object/public/piazza-media/avulsos/c860cec1-6d55-4bdb-bcc0-1d3b13df1fc4.mp4",
       desc: "Combo completo dos dois espaços para eventos que pedem amplitude e versatilidade.", code: "Produto 02" },
     { id: "auditorio", title: "Auditório", capacity: "100 pessoas", price: prices.avulsos.auditorio,
-      img: "https://picsum.photos/800/600?random=52",
+      img: "https://oowncafdgqroyqfamzpr.supabase.co/storage/v1/object/public/piazza-media/avulsos/5f97ea37-04b0-4840-a874-3b8acfa50abf.mp4",
       desc: "Auditório climatizado, ideal para palestras, treinamentos e apresentações.", code: "Produto 03" },
     { id: "rooftop", title: "Rooftop", capacity: "60 pessoas", price: prices.avulsos.rooftop,
-      img: "https://picsum.photos/800/600?random=53",
+      img: "https://oowncafdgqroyqfamzpr.supabase.co/storage/v1/object/public/piazza-media/avulsos/949d505c-7492-486b-ac68-0f9664cf22fe.mp4",
       desc: "Rooftop com vista panorâmica para coquetéis, jantares e celebrações ao ar livre.", code: "Produto 04" },
   ];
 
