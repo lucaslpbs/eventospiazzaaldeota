@@ -2,7 +2,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Modal } from "../Modal";
 import { Users } from "lucide-react";
-import { DEFAULT_PRICES, DEFAULT_AVULSOS, DEFAULT_CAPACITIES, fmt, useSiteContent, type Prices, type AvulsosContent, type CapacitiesContent } from "@/lib/site-content";
+import { DEFAULT_PRICES, DEFAULT_AVULSOS, DEFAULT_CAPACITIES, fmt, useSiteContent, waLink, type Prices, type AvulsosContent, type CapacitiesContent } from "@/lib/site-content";
 
 const getYtId = (url: string) => {
   const m = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/)([A-Za-z0-9_-]{11})/);
@@ -114,7 +114,7 @@ export const Avulsos = () => {
                 <span className="px-4 py-1.5 rounded-full bg-accent text-charcoal text-sm font-semibold">{fmt(it.price)}</span>
               </div>
               <p className="text-xs opacity-60 italic mb-6">Pacotes anuais, semestrais e trimestrais com condições especiais — consulte.</p>
-              <a href="https://wa.me/5585989801309" target="_blank" rel="noreferrer" className="btn-gold">Solicitar via WhatsApp</a>
+              <a href={waLink(`Olá! Tenho interesse no espaço avulso *${it.title}* (${fmt(it.price)} — até ${it.capacity}). Podem me passar mais informações?`)} target="_blank" rel="noreferrer" className="btn-gold">Solicitar via WhatsApp</a>
             </div>
           </div>
         </Modal>

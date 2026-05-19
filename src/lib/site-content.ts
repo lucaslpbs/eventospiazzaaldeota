@@ -18,6 +18,9 @@ export type CapacitiesContent = { auditorio: number; rooftop: number; aud_roof: 
 export const WHATSAPP_URL = "https://wa.me/5585989801309";
 export const INSTAGRAM_URL = "https://instagram.com/piazzaaldeota";
 
+export const waLink = (message: string) =>
+  `https://wa.me/5585989801309?text=${encodeURIComponent(message)}`;
+
 export const DEFAULT_HERO: HeroContent = {
   video_url: "https://www.youtube.com/watch?v=aSBLj1RGIzw",
   headline: "Onde cada detalhe transforma o seu evento.",

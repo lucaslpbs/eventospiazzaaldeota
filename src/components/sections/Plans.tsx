@@ -2,7 +2,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Modal } from "../Modal";
 import { Check, Star } from "lucide-react";
-import { DEFAULT_PRICES, fmt, useSiteContent, type Prices } from "@/lib/site-content";
+import { DEFAULT_PRICES, fmt, useSiteContent, waLink, type Prices } from "@/lib/site-content";
 
 const tiers = [25, 50, 100] as const;
 
@@ -67,7 +67,7 @@ const PlanModal = ({ open, onClose, plan, prices, color }: any) => {
           </ul>
         </div>
 
-        <a href="https://wa.me/5585989801309" target="_blank" rel="noreferrer" className="btn-gold w-full sm:w-auto">
+        <a href={waLink(`Olá! Tenho interesse no *Plano ${plan.name}* para *${pax} pessoas* — valor por pessoa ${fmt(perPerson)}, total estimado ${fmt(total)}. Podem me passar mais informações?`)} target="_blank" rel="noreferrer" className="btn-gold w-full sm:w-auto">
           Solicitar este plano via WhatsApp
         </a>
       </div>
