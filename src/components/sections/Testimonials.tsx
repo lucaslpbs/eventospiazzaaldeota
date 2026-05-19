@@ -15,7 +15,7 @@ export const Testimonials = () => {
   );
 
   useEffect(() => {
-    supabase.from("testimonials").select("*").order("position").then(({ data }) => setItems(data ?? []));
+    supabase.from("testimonials").select("*").eq("approved", true).order("position").then(({ data }) => setItems(data ?? []));
   }, []);
 
   if (!items.length) return null;
