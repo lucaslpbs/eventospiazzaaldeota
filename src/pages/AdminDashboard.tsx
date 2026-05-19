@@ -261,33 +261,61 @@ const ContactEditor = () => {
 
 const TestimonialsEditor = () => {
   const [items, setItems] = useState<any[]>([]);
-  const load = () => supabase.from("testimonials").select("*").order("position").then(({ data }) => setItems(data ?? []));
+  const load = () => supabase.from("testimonials").select("*").order("approved", { ascending: true }).order("position").then(({ data }) => setItems(data ?? []));
   useEffect(() => { load(); }, []);
 
   const add = async () => {
-    await supabase.from("testimonials").insert({ name: "Novo cliente", quote: "...", stars: 5, position: items.length });
+    await supabase.from("testimonials").insert({ name: "Novo cliente", quote: "...", stars: 5, position: items.length, approved: true });
     load();
   };
   const upd = async (id: string, patch: any) => { await supabase.from("testimonials").update(patch).eq("id", id); load(); };
   const del = async (id: string) => { await supabase.from("testimonials").delete().eq("id", id); load(); };
 
+  const pending = items.filter((t) => !t.approved);
+  const approved = items.filter((t) => t.approved);
+
+  const Card = ({ t }: { t: any }) => (
+    <div className={`${card} grid md:grid-cols-2 gap-3 ${!t.approved ? "border-2 border-accent/50" : ""}`}>
+      {!t.approved && (
+        <div className="md:col-span-2 flex items-center justify-between bg-accent/10 -m-6 mb-0 px-6 py-3 rounded-t-2xl">
+          <span className="text-xs uppercase tracking-widest text-accent font-semibold">⏳ Aguardando aprovação</span>
+          <button onClick={() => upd(t.id, { approved: true })} className="btn-gold text-sm py-1.5 px-4">✓ Aprovar e publicar</button>
+        </div>
+      )}
+      <input className={input} value={t.name || ""} onChange={(e) => upd(t.id, { name: e.target.value })} placeholder="Nome" />
+      <input className={input} value={t.company || ""} onChange={(e) => upd(t.id, { company: e.target.value })} placeholder="Empresa" />
+      <input className={input} type="number" min="1" max="5" value={t.stars} onChange={(e) => upd(t.id, { stars: parseInt(e.target.value) })} placeholder="Estrelas" />
+      <input className={input} value={t.avatar_url || ""} onChange={(e) => upd(t.id, { avatar_url: e.target.value })} placeholder="Avatar URL" />
+      <textarea className={`${input} md:col-span-2`} rows={2} value={t.quote} onChange={(e) => upd(t.id, { quote: e.target.value })} placeholder="Depoimento" />
+      <div className="md:col-span-2 flex items-center justify-between">
+        {t.approved && (
+          <button onClick={() => upd(t.id, { approved: false })} className="text-xs text-cream/60 hover:text-accent">
+            Despublicar
+          </button>
+        )}
+        <button onClick={() => del(t.id)} className="text-destructive text-sm flex items-center gap-1 ml-auto"><Trash2 size={14}/> Excluir</button>
+      </div>
+    </div>
+  );
+
   return (
     <div>
       <h2 className="font-display text-4xl mb-2">Depoimentos</h2>
-      <div className="gold-line w-24 mb-8" />
-      <button onClick={add} className="btn-gold mb-6"><Plus size={16}/> Adicionar</button>
-      <div className="space-y-4">
-        {items.map((t) => (
-          <div key={t.id} className={`${card} grid md:grid-cols-2 gap-3`}>
-            <input className={input} value={t.name || ""} onChange={(e) => upd(t.id, { name: e.target.value })} placeholder="Nome" />
-            <input className={input} value={t.company || ""} onChange={(e) => upd(t.id, { company: e.target.value })} placeholder="Empresa" />
-            <input className={input} type="number" min="1" max="5" value={t.stars} onChange={(e) => upd(t.id, { stars: parseInt(e.target.value) })} placeholder="Estrelas" />
-            <input className={input} value={t.avatar_url || ""} onChange={(e) => upd(t.id, { avatar_url: e.target.value })} placeholder="Avatar URL" />
-            <textarea className={`${input} md:col-span-2`} rows={2} value={t.quote} onChange={(e) => upd(t.id, { quote: e.target.value })} placeholder="Depoimento" />
-            <button onClick={() => del(t.id)} className="text-destructive text-sm flex items-center gap-1 self-start"><Trash2 size={14}/> Excluir</button>
-          </div>
-        ))}
+      <div className="gold-line w-24 mb-6" />
+      <div className="mb-6 text-sm text-cream/70">
+        Avaliações de clientes podem ser enviadas via <code className="text-accent">/avaliar</code> — compartilhe esse link após o evento.
       </div>
+      <button onClick={add} className="btn-gold mb-6"><Plus size={16}/> Adicionar manualmente</button>
+
+      {pending.length > 0 && (
+        <div className="mb-8">
+          <h3 className="font-display text-2xl mb-3 text-accent">Pendentes ({pending.length})</h3>
+          <div className="space-y-4">{pending.map((t) => <Card key={t.id} t={t} />)}</div>
+        </div>
+      )}
+
+      <h3 className="font-display text-2xl mb-3">Publicados ({approved.length})</h3>
+      <div className="space-y-4">{approved.map((t) => <Card key={t.id} t={t} />)}</div>
     </div>
   );
 };
