@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Modal } from "../Modal";
-import { DEFAULT_PRICES, fmt, useSiteContent, type Prices } from "@/lib/site-content";
+import { DEFAULT_PRICES, fmt, useSiteContent, waLink, type Prices } from "@/lib/site-content";
 
 const menus: Record<string, { items: string[]; note?: string }> = {
   bronze: {
@@ -102,7 +102,7 @@ export const Coffee = () => {
               ))}
             </ul>
             {menus[c.id].note && <p className="text-sm italic text-accent mb-6">★ {menus[c.id].note}</p>}
-            <a href="https://wa.me/5585989801309" target="_blank" rel="noreferrer" className="btn-gold">Solicitar via WhatsApp</a>
+            <a href={waLink(`Olá! Tenho interesse no Coffee Break *${c.name}* (${fmt(c.price)} por pessoa). Podem me passar mais informações?`)} target="_blank" rel="noreferrer" className="btn-gold">Solicitar via WhatsApp</a>
           </div>
         </Modal>
       ))}
