@@ -14,6 +14,164 @@ export type Database = {
   }
   public: {
     Tables: {
+      event_checklist: {
+        Row: {
+          briefing_done: Json
+          created_at: string
+          event_id: string
+          items: Json
+          responsavel: string | null
+          updated_at: string
+        }
+        Insert: {
+          briefing_done?: Json
+          created_at?: string
+          event_id: string
+          items?: Json
+          responsavel?: string | null
+          updated_at?: string
+        }
+        Update: {
+          briefing_done?: Json
+          created_at?: string
+          event_id?: string
+          items?: Json
+          responsavel?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "event_checklist_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: true
+            referencedRelation: "events"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      events: {
+        Row: {
+          atracao: string | null
+          bebida_alcoolica: boolean | null
+          buffet: string | null
+          cerimonial: boolean | null
+          contato: string
+          convidados_estimados: number | null
+          created_at: string
+          credenciamento: boolean | null
+          data: string
+          data_preenchimento: string | null
+          decoracao: boolean | null
+          empresa: string | null
+          equipamentos_externos: string | null
+          estilo_decoracao: string | null
+          gerador: string | null
+          horario_inicio: string | null
+          horario_montagem: string | null
+          horario_servico: string | null
+          horario_termino: string | null
+          id: string
+          iluminacao: string | null
+          limpeza_durante: boolean | null
+          local_evento: string | null
+          microfones: string | null
+          nome_evento: string
+          observacoes: string | null
+          pacote: string | null
+          painel_fotografia: string | null
+          responsavel: string | null
+          responsavel_buffet: string | null
+          restricoes_alimentares: boolean | null
+          restricoes_obs: string | null
+          sonorizacao: string | null
+          telao: string | null
+          tipo_coffee: string | null
+          tipo_evento: string | null
+          updated_at: string
+          valet: boolean | null
+        }
+        Insert: {
+          atracao?: string | null
+          bebida_alcoolica?: boolean | null
+          buffet?: string | null
+          cerimonial?: boolean | null
+          contato: string
+          convidados_estimados?: number | null
+          created_at?: string
+          credenciamento?: boolean | null
+          data: string
+          data_preenchimento?: string | null
+          decoracao?: boolean | null
+          empresa?: string | null
+          equipamentos_externos?: string | null
+          estilo_decoracao?: string | null
+          gerador?: string | null
+          horario_inicio?: string | null
+          horario_montagem?: string | null
+          horario_servico?: string | null
+          horario_termino?: string | null
+          id?: string
+          iluminacao?: string | null
+          limpeza_durante?: boolean | null
+          local_evento?: string | null
+          microfones?: string | null
+          nome_evento: string
+          observacoes?: string | null
+          pacote?: string | null
+          painel_fotografia?: string | null
+          responsavel?: string | null
+          responsavel_buffet?: string | null
+          restricoes_alimentares?: boolean | null
+          restricoes_obs?: string | null
+          sonorizacao?: string | null
+          telao?: string | null
+          tipo_coffee?: string | null
+          tipo_evento?: string | null
+          updated_at?: string
+          valet?: boolean | null
+        }
+        Update: {
+          atracao?: string | null
+          bebida_alcoolica?: boolean | null
+          buffet?: string | null
+          cerimonial?: boolean | null
+          contato?: string
+          convidados_estimados?: number | null
+          created_at?: string
+          credenciamento?: boolean | null
+          data?: string
+          data_preenchimento?: string | null
+          decoracao?: boolean | null
+          empresa?: string | null
+          equipamentos_externos?: string | null
+          estilo_decoracao?: string | null
+          gerador?: string | null
+          horario_inicio?: string | null
+          horario_montagem?: string | null
+          horario_servico?: string | null
+          horario_termino?: string | null
+          id?: string
+          iluminacao?: string | null
+          limpeza_durante?: boolean | null
+          local_evento?: string | null
+          microfones?: string | null
+          nome_evento?: string
+          observacoes?: string | null
+          pacote?: string | null
+          painel_fotografia?: string | null
+          responsavel?: string | null
+          responsavel_buffet?: string | null
+          restricoes_alimentares?: boolean | null
+          restricoes_obs?: string | null
+          sonorizacao?: string | null
+          telao?: string | null
+          tipo_coffee?: string | null
+          tipo_evento?: string | null
+          updated_at?: string
+          valet?: boolean | null
+        }
+        Relationships: []
+      }
       gallery_images: {
         Row: {
           created_at: string
