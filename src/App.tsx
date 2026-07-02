@@ -8,6 +8,9 @@ import NotFound from "./pages/NotFound.tsx";
 import AdminLogin from "./pages/AdminLogin.tsx";
 import AdminDashboard from "./pages/AdminDashboard.tsx";
 import ReviewForm from "./pages/ReviewForm.tsx";
+import SystemLogin from "./pages/SystemLogin.tsx";
+import SystemDashboard from "./pages/SystemDashboard.tsx";
+import ClientDetail from "./pages/ClientDetail.tsx";
 
 const queryClient = new QueryClient();
 
@@ -22,6 +25,10 @@ const App = () => (
           <Route path="/admin" element={<AdminLogin />} />
           <Route path="/admin/dashboard" element={<AdminDashboard />} />
           <Route path="/avaliar" element={<ReviewForm />} />
+          <Route path="/sistema/login" element={<SystemLogin />} />
+          <Route path="/sistema" element={<SystemDashboard />} />
+          <Route path="/sistema/clientes/novo" element={<ClientDetail />} />
+          <Route path="/sistema/clientes/:id" element={<ClientDetail />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
