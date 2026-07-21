@@ -35,7 +35,7 @@ export const DEFAULT_PRICES: Prices = {
   premium: { "25": 209.9, "50": 185.9, "100": 149.9 },
   signature: { "25": 219.9, "50": 199.9, "100": 149.9 },
   avulsos: { aud_roof: 5800, auditorio: 2799, rooftop: 2900 },
-  coffee: { bronze: 59, prata: 85, ouro: 95 },
+  coffee: { bronze: 65, prata: 85, ouro: 95 },
 };
 export const DEFAULT_SPACES: SpacesContent = { auditorio: [], rooftop: [] };
 export const DEFAULT_AVULSOS: AvulsosContent = { aud_roof: "", auditorio: "", rooftop: "" };
