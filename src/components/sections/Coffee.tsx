@@ -75,7 +75,7 @@ export const Coffee = () => {
               className={`text-left rounded-3xl p-8 border-2 border-accent/20 bg-gradient-to-br ${c.accent} bg-card hover:border-accent/60 transition-all shadow-soft`}
             >
               <div className="text-5xl mb-4">{c.icon}</div>
-              <div className="font-serif-soft italic uppercase tracking-[0.25em] text-xs text-muted-foreground">Coffee Break</div>
+              <div className="font-serif-soft italic uppercase tracking-[0.25em] text-xs text-muted-foreground">{c.category}</div>
               <h3 className="font-display text-4xl mt-1">{c.name}</h3>
               <div className="gold-line w-12 my-4" />
               <div className="font-display text-3xl text-primary">{fmt(c.price)}<span className="text-sm text-muted-foreground font-body">/pessoa</span></div>
