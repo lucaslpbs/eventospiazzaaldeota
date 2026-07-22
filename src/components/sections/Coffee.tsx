@@ -89,7 +89,7 @@ export const Coffee = () => {
         <Modal key={c.id} open={open === c.id} onClose={() => setOpen(null)}>
           <div className="p-8 md:p-12">
             <div className="text-6xl mb-2">{c.icon}</div>
-            <div className="font-serif-soft italic text-accent uppercase tracking-[0.3em] text-xs">Coffee Break</div>
+            <div className="font-serif-soft italic text-accent uppercase tracking-[0.3em] text-xs">{c.category}</div>
             <h3 className="font-display text-4xl md:text-5xl mt-2">{c.name}</h3>
             <div className="gold-line w-24 my-4" />
             <div className="font-display text-4xl text-accent mb-8">{fmt(c.price)}<span className="text-base text-cream/60 font-body">/pessoa</span></div>
