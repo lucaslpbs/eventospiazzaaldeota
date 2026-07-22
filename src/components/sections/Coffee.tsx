@@ -6,25 +6,28 @@ import { DEFAULT_PRICES, fmt, useSiteContent, waLink, type Prices } from "@/lib/
 const menus: Record<string, { items: string[]; note?: string }> = {
   bronze: {
     items: [
-      "☕ Café e chá",
+      "☕ Café, chá e refrigerante",
       "🥤 Suco natural (1 sabor)",
-      "🥪 Mini sanduíche árabe",
-      "🎉 Salgados festivos: coxinha, pastel, canudinho e bolinha de queijo",
+      "🥐 Croissant recheado (misto, carne de sol, calabresa, frango ou queijo)",
+      "🎉 Salgados festivos (coxinha, pastel, canudinho, bolinha de queijo)",
       "🥖 Mini pão delícia (pão de leite com peito de peru e cream cheese)",
       "🌭 Mini hot dog",
-      "🥧 Empadinhas",
+      "🥧 Mini empadinhas",
+      "🍪 Biscoitinhos amanteigados de castanha e goiabada",
       "🍰 Bolo mole",
     ],
   },
   prata: {
     items: [
-      "☕ Café e chá",
-      "🥤 2 sucos naturais (limão e maracujá)",
+      "☕ Café, chá e refrigerantes",
+      "🥤 2 sucos naturais",
       "🧀 Terrine de queijos com tostadas",
       "🥩 Carne escabiche com pães diversos",
       "🍕 Pizzete de calabresa",
       "🍔 Mini hambúrgueres",
       "🍊 Bolo de laranja com calda caramelizada",
+      "🎉 Salgados festivos (coxinha, pastel, canudinho, bolinha de queijo)",
+      "🍌 Folheado de banana com canela ou chocolate",
     ],
   },
   ouro: {
@@ -33,9 +36,9 @@ const menus: Record<string, { items: string[]; note?: string }> = {
       "🧀 Terrine de queijos com tostadas de parmesão",
       "🍗 Finger food de frango ao gorgonzola",
       "🥔 Ramekin de batata com bacon ao molho bechamel",
-      "🍆 Antepasto de berinjela com tostadas",
-      "🥪 Mini sanduíches de patê no pão árabe",
-      "☕ Chocolate quente com marshmallow",
+      "🍤 Salgados finos diversos (carne de sol, camarão, frango, mini quiche lorraine, mini quiche de ricota com ervas)",
+      "🍔 Mini hamburguinho",
+      "🍫 Mini brownie e brigadeiro",
     ],
   },
 };
