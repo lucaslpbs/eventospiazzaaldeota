@@ -48,9 +48,9 @@ export const Coffee = () => {
   const [prices] = useSiteContent<Prices>("prices", DEFAULT_PRICES);
 
   const cards = [
-    { id: "bronze" as const, name: "Bronze", icon: "🥉", price: prices.coffee.bronze, accent: "from-amber-700/20 to-amber-900/10" },
-    { id: "prata" as const, name: "Prata", icon: "🥈", price: prices.coffee.prata, accent: "from-slate-300/20 to-slate-500/10" },
-    { id: "ouro" as const, name: "Ouro", icon: "🥇", price: prices.coffee.ouro, accent: "from-accent/30 to-accent/10" },
+    { id: "bronze" as const, name: "Bronze", icon: "🥉", price: prices.coffee.bronze, category: "Coffee Break", accent: "from-amber-700/20 to-amber-900/10" },
+    { id: "prata" as const, name: "Prata", icon: "🥈", price: prices.coffee.prata, category: "Coffee Break", accent: "from-slate-300/20 to-slate-500/10" },
+    { id: "ouro" as const, name: "Ouro", icon: "🥇", price: prices.coffee.ouro, category: "Coquetel", accent: "from-accent/30 to-accent/10" },
   ];
 
   return (
