@@ -48,9 +48,9 @@ export const Coffee = () => {
   const [prices] = useSiteContent<Prices>("prices", DEFAULT_PRICES);
 
   const cards = [
-    { id: "bronze" as const, name: "Bronze", icon: "🥉", price: prices.coffee.bronze, accent: "from-amber-700/20 to-amber-900/10" },
-    { id: "prata" as const, name: "Prata", icon: "🥈", price: prices.coffee.prata, accent: "from-slate-300/20 to-slate-500/10" },
-    { id: "ouro" as const, name: "Ouro", icon: "🥇", price: prices.coffee.ouro, accent: "from-accent/30 to-accent/10" },
+    { id: "bronze" as const, name: "Bronze", icon: "🥉", price: prices.coffee.bronze, category: "Coffee Break", accent: "from-amber-700/20 to-amber-900/10" },
+    { id: "prata" as const, name: "Prata", icon: "🥈", price: prices.coffee.prata, category: "Coffee Break", accent: "from-slate-300/20 to-slate-500/10" },
+    { id: "ouro" as const, name: "Ouro", icon: "🥇", price: prices.coffee.ouro, category: "Coquetel", accent: "from-accent/30 to-accent/10" },
   ];
 
   return (
@@ -75,7 +75,7 @@ export const Coffee = () => {
               className={`text-left rounded-3xl p-8 border-2 border-accent/20 bg-gradient-to-br ${c.accent} bg-card hover:border-accent/60 transition-all shadow-soft`}
             >
               <div className="text-5xl mb-4">{c.icon}</div>
-              <div className="font-serif-soft italic uppercase tracking-[0.25em] text-xs text-muted-foreground">Coffee Break</div>
+              <div className="font-serif-soft italic uppercase tracking-[0.25em] text-xs text-muted-foreground">{c.category}</div>
               <h3 className="font-display text-4xl mt-1">{c.name}</h3>
               <div className="gold-line w-12 my-4" />
               <div className="font-display text-3xl text-primary">{fmt(c.price)}<span className="text-sm text-muted-foreground font-body">/pessoa</span></div>
@@ -89,7 +89,7 @@ export const Coffee = () => {
         <Modal key={c.id} open={open === c.id} onClose={() => setOpen(null)}>
           <div className="p-8 md:p-12">
             <div className="text-6xl mb-2">{c.icon}</div>
-            <div className="font-serif-soft italic text-accent uppercase tracking-[0.3em] text-xs">Coffee Break</div>
+            <div className="font-serif-soft italic text-accent uppercase tracking-[0.3em] text-xs">{c.category}</div>
             <h3 className="font-display text-4xl md:text-5xl mt-2">{c.name}</h3>
             <div className="gold-line w-24 my-4" />
             <div className="font-display text-4xl text-accent mb-8">{fmt(c.price)}<span className="text-base text-cream/60 font-body">/pessoa</span></div>
