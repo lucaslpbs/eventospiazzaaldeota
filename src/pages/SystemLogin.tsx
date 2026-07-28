@@ -11,9 +11,12 @@ const SystemLogin = () => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data }) => {
-      if (data.session) nav("/sistema");
-    });
+    (async () => {
+      const { data } = await supabase.auth.getSession();
+      if (!data.session) return;
+      const { data: roles } = await supabase.from("user_roles").select("role").eq("user_id", data.session.user.id);
+      if ((roles ?? []).some((r: any) => r.role === "admin")) nav("/sistema");
+    })();
   }, [nav]);
 
   const submit = async (e: React.FormEvent) => {
