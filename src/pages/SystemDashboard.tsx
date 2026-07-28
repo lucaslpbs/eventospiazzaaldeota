@@ -29,7 +29,7 @@ const SystemDashboard = () => {
       const { data: sess } = await supabase.auth.getSession();
       if (!sess.session) { nav("/sistema/login"); return; }
       const { data: roles } = await supabase.from("user_roles").select("role").eq("user_id", sess.session.user.id);
-      if (!(roles ?? []).some((r: any) => r.role === "admin")) { toast.error("Acesso restrito"); nav("/sistema/login"); return; }
+      if (!(roles ?? []).some((r: any) => r.role === "admin")) { toast.error("Acesso restrito"); await supabase.auth.signOut(); nav("/sistema/login"); return; }
       const [{ data: ev }, { data: cl }] = await Promise.all([
         supabase.from("events").select("*").order("data", { ascending: false }),
         supabase.from("event_checklist").select("*"),
