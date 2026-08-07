@@ -55,13 +55,18 @@ export type Database = {
           bebida_alcoolica: boolean | null
           buffet: string | null
           cerimonial: boolean | null
+          coffee_piazza: boolean | null
           contato: string
           convidados_estimados: number | null
           created_at: string
           credenciamento: boolean | null
           data: string
+          data_desmontagem: string | null
+          data_montagem: string | null
           data_preenchimento: string | null
           decoracao: boolean | null
+          desmontagem_inicio: string | null
+          desmontagem_termino: string | null
           empresa: string | null
           equipamentos_externos: string | null
           estilo_decoracao: string | null
@@ -75,10 +80,14 @@ export type Database = {
           limpeza_durante: boolean | null
           local_evento: string | null
           microfones: string | null
+          montagem_inicio: string | null
+          montagem_termino: string | null
           nome_evento: string
           observacoes: string | null
+          opcao_coffee: string | null
           pacote: string | null
           painel_fotografia: string | null
+          qtd_coffee: number | null
           responsavel: string | null
           responsavel_buffet: string | null
           restricoes_alimentares: boolean | null
@@ -95,13 +104,18 @@ export type Database = {
           bebida_alcoolica?: boolean | null
           buffet?: string | null
           cerimonial?: boolean | null
+          coffee_piazza?: boolean | null
           contato: string
           convidados_estimados?: number | null
           created_at?: string
           credenciamento?: boolean | null
           data: string
+          data_desmontagem?: string | null
+          data_montagem?: string | null
           data_preenchimento?: string | null
           decoracao?: boolean | null
+          desmontagem_inicio?: string | null
+          desmontagem_termino?: string | null
           empresa?: string | null
           equipamentos_externos?: string | null
           estilo_decoracao?: string | null
@@ -115,10 +129,14 @@ export type Database = {
           limpeza_durante?: boolean | null
           local_evento?: string | null
           microfones?: string | null
+          montagem_inicio?: string | null
+          montagem_termino?: string | null
           nome_evento: string
           observacoes?: string | null
+          opcao_coffee?: string | null
           pacote?: string | null
           painel_fotografia?: string | null
+          qtd_coffee?: number | null
           responsavel?: string | null
           responsavel_buffet?: string | null
           restricoes_alimentares?: boolean | null
@@ -135,13 +153,18 @@ export type Database = {
           bebida_alcoolica?: boolean | null
           buffet?: string | null
           cerimonial?: boolean | null
+          coffee_piazza?: boolean | null
           contato?: string
           convidados_estimados?: number | null
           created_at?: string
           credenciamento?: boolean | null
           data?: string
+          data_desmontagem?: string | null
+          data_montagem?: string | null
           data_preenchimento?: string | null
           decoracao?: boolean | null
+          desmontagem_inicio?: string | null
+          desmontagem_termino?: string | null
           empresa?: string | null
           equipamentos_externos?: string | null
           estilo_decoracao?: string | null
@@ -155,10 +178,14 @@ export type Database = {
           limpeza_durante?: boolean | null
           local_evento?: string | null
           microfones?: string | null
+          montagem_inicio?: string | null
+          montagem_termino?: string | null
           nome_evento?: string
           observacoes?: string | null
+          opcao_coffee?: string | null
           pacote?: string | null
           painel_fotografia?: string | null
+          qtd_coffee?: number | null
           responsavel?: string | null
           responsavel_buffet?: string | null
           restricoes_alimentares?: boolean | null
