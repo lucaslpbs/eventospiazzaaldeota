@@ -62,11 +62,12 @@ const SystemDashboard = () => {
     };
     const rows = events.map((e) => {
       const cl = checklists[e.id];
-      const aud = checklistProgress(cl?.items ?? {}, CHECKLIST_BLOCKS[0]);
-      const roo = checklistProgress(cl?.items ?? {}, CHECKLIST_BLOCKS[1]);
+      const aud = groupProgress(cl?.items ?? {}, "auditorio");
+      const roo = groupProgress(cl?.items ?? {}, "rooftop");
       const base = cols.map((c) => escape((e as any)[c]));
       return [...base, `${aud.done}/${aud.total}`, `${roo.done}/${roo.total}`, computeStatus(e)].join(",");
     });
+
     const csv = [headers.join(","), ...rows].join("\n");
     const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8;" });
     const url = URL.createObjectURL(blob);
