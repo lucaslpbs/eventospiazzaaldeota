@@ -4,7 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Logo } from "@/components/Logo";
 import { toast } from "sonner";
 import { Plus, Download, LogOut, Search, ArrowRight } from "lucide-react";
-import { ALL_BRIEFING_FIELDS, CHECKLIST_BLOCKS, checklistProgress, computeStatus } from "@/lib/system-fields";
+import { ALL_BRIEFING_FIELDS, groupProgress, computeStatus } from "@/lib/system-fields";
 
 const brand = "#0F3D2E";
 const bg = "#F5EFE4";
