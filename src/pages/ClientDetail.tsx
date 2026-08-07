@@ -11,7 +11,9 @@ import {
   CHECKLIST_BLOCKS,
   BriefingField,
   checklistProgress,
+  groupProgress,
 } from "@/lib/system-fields";
+
 
 const brand = "#0F3D2E";
 const brandSoft = "#155F45";
