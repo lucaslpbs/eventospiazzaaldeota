@@ -11,7 +11,9 @@ import {
   CHECKLIST_BLOCKS,
   BriefingField,
   checklistProgress,
+  groupProgress,
 } from "@/lib/system-fields";
+
 
 const brand = "#0F3D2E";
 const brandSoft = "#155F45";
@@ -165,8 +167,9 @@ const ClientDetail = () => {
     nav("/sistema");
   };
 
-  const audProg = useMemo(() => checklistProgress(checklistItems, CHECKLIST_BLOCKS[0]), [checklistItems]);
-  const rooProg = useMemo(() => checklistProgress(checklistItems, CHECKLIST_BLOCKS[1]), [checklistItems]);
+  const audProg = useMemo(() => groupProgress(checklistItems, "auditorio"), [checklistItems]);
+  const rooProg = useMemo(() => groupProgress(checklistItems, "rooftop"), [checklistItems]);
+
 
   if (!ready) return <div className="min-h-screen" style={{ background: bg }} />;
 
@@ -271,48 +274,81 @@ const ClientDetail = () => {
               </div>
             </section>
 
-            {CHECKLIST_BLOCKS.map((block) => {
-              const prog = block.id === "auditorio" ? audProg : rooProg;
+            {(["auditorio", "rooftop"] as const).map((group) => {
+              const gProg = group === "auditorio" ? audProg : rooProg;
               return (
-                <section key={block.id} className="rounded-2xl overflow-hidden" style={{ background: surface, border: `1px solid ${border}` }}>
-                  <div className="px-5 py-3 text-white flex items-center justify-between" style={{ background: brand }}>
-                    <h2 className="font-display text-lg uppercase tracking-wider">{block.title}</h2>
-                    <span className="text-xs bg-white/15 rounded-full px-3 py-1">{prog.done}/{prog.total}</span>
+                <div key={group} className="space-y-4">
+                  <div className="flex items-center justify-between px-1">
+                    <h2 className="font-display text-xl uppercase tracking-[0.2em]" style={{ color: brand }}>
+                      Check list — {group === "auditorio" ? "Auditório" : "Rooftop"}
+                    </h2>
+                    <span className="text-xs rounded-full px-3 py-1 text-white" style={{ background: brandSoft }}>{gProg.done}/{gProg.total}</span>
                   </div>
-                  <ul className="divide-y" style={{ borderColor: border }}>
-                    {block.items.map((it) => {
-                      const val = checklistItems?.[block.id]?.[it.key];
-                      const whoVal = checklistItems?.[block.id]?.[`${it.key}_quem`] ?? "";
-                      const toggle = () => setChecklistItems((c: any) => ({
-                        ...c,
-                        [block.id]: { ...c[block.id], [it.key]: !c?.[block.id]?.[it.key] },
-                      }));
-                      const setWho = (v: string) => setChecklistItems((c: any) => ({
-                        ...c,
-                        [block.id]: { ...c[block.id], [`${it.key}_quem`]: v },
-                      }));
-                      return (
-                        <li key={it.key} className="flex flex-col sm:flex-row sm:items-center gap-3 p-4 hover:bg-black/[0.02]">
-                          <button onClick={toggle}
-                            className="flex items-center gap-3 flex-1 text-left">
-                            <span className="w-6 h-6 rounded-md flex items-center justify-center border-2 flex-shrink-0"
-                              style={{ background: val ? brand : "#fff", borderColor: val ? brand : "#B8A883" }}>
-                              {val && <Check size={16} className="text-white" />}
-                            </span>
-                            <span className={`text-sm ${val ? "line-through text-neutral-400" : "text-neutral-800"}`}>{it.label}</span>
-                          </button>
-                          {it.withWho && (
-                            <input value={whoVal} onChange={(e) => setWho(e.target.value)} placeholder="Quem?"
-                              className="sm:w-56 rounded-lg px-3 py-2 text-sm outline-none border"
-                              style={{ background: "#F7F0E1", borderColor: "#D9CBB0" }} />
-                          )}
-                        </li>
-                      );
-                    })}
-                  </ul>
-                </section>
+
+                  {CHECKLIST_BLOCKS.filter((b) => b.group === group).map((block) => {
+                    const prog = checklistProgress(checklistItems, block);
+                    return (
+                      <section key={block.id} className="rounded-2xl overflow-hidden" style={{ background: surface, border: `1px solid ${border}` }}>
+                        <div className="px-5 py-3 text-white flex items-center justify-between" style={{ background: brand }}>
+                          <h3 className="font-display text-lg uppercase tracking-wider">{block.title}</h3>
+                          <span className="text-xs bg-white/15 rounded-full px-3 py-1">{prog.done}/{prog.total}</span>
+                        </div>
+                        <ul className="divide-y" style={{ borderColor: border }}>
+                          {block.items.map((it) => {
+                            const val = checklistItems?.[block.id]?.[it.key];
+                            const whoVal = checklistItems?.[block.id]?.[`${it.key}_quem`] ?? "";
+                            const obsVal = checklistItems?.[block.id]?.[`${it.key}_obs`] ?? "";
+                            const set = (k: string, v: any) => setChecklistItems((c: any) => ({
+                              ...c,
+                              [block.id]: { ...c[block.id], [k]: v },
+                            }));
+                            return (
+                              <li key={it.key} className="flex flex-col lg:flex-row lg:items-center gap-3 p-4 hover:bg-black/[0.02]">
+                                <button onClick={() => set(it.key, !val)} className="flex items-center gap-3 flex-1 text-left">
+                                  <span className="w-6 h-6 rounded-md flex items-center justify-center border-2 flex-shrink-0"
+                                    style={{ background: val ? brand : "#fff", borderColor: val ? brand : "#B8A883" }}>
+                                    {val && <Check size={16} className="text-white" />}
+                                  </span>
+                                  <span className={`text-sm ${val ? "line-through text-neutral-400" : "text-neutral-800"}`}>{it.label}</span>
+                                </button>
+                                <div className="flex flex-col sm:flex-row gap-2 lg:w-[45%]">
+                                  <input value={obsVal} onChange={(e) => set(`${it.key}_obs`, e.target.value)} placeholder="Observação"
+                                    className="flex-1 rounded-lg px-3 py-2 text-sm outline-none border"
+                                    style={{ background: "#F7F0E1", borderColor: "#D9CBB0" }} />
+                                  {it.withWho && (
+                                    <input value={whoVal} onChange={(e) => set(`${it.key}_quem`, e.target.value)} placeholder="Quem fará?"
+                                      className="sm:w-44 rounded-lg px-3 py-2 text-sm outline-none border"
+                                      style={{ background: "#F7F0E1", borderColor: "#D9CBB0" }} />
+                                  )}
+                                </div>
+                              </li>
+                            );
+                          })}
+                        </ul>
+                        {block.footer && (
+                          <div className="p-5 grid grid-cols-1 md:grid-cols-3 gap-4 border-t" style={{ borderColor: border }}>
+                            {block.footer.map((f) => (
+                              <div key={f.key}>
+                                <label className="block text-xs uppercase text-neutral-500 mb-1">{f.label}</label>
+                                <input
+                                  value={checklistItems?.[block.id]?.[f.key] ?? ""}
+                                  onChange={(e) => setChecklistItems((c: any) => ({
+                                    ...c,
+                                    [block.id]: { ...c[block.id], [f.key]: e.target.value },
+                                  }))}
+                                  className="w-full rounded-xl px-4 py-2 outline-none border text-sm"
+                                  style={{ background: "#F7F0E1", borderColor: "#D9CBB0" }} />
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </section>
+                    );
+                  })}
+                </div>
               );
             })}
+
           </>
         )}
       </main>

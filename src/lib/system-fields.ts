@@ -46,12 +46,14 @@ export const BRIEFING_SECTIONS: BriefingSection[] = [
     title: "Alimentos e Bebidas",
     fields: [
       { name: "buffet", label: "Buffet contratado", type: "text" },
-      { name: "tipo_coffee", label: "Tipo de coffee", type: "text" },
+      { name: "coffee_piazza", label: "Tipo de Coffee Break Piazza?", type: "boolean" },
+      { name: "qtd_coffee", label: "Quantidade de coffee contratado (pessoas)", type: "number" },
+      { name: "opcao_coffee", label: "Opção de coffee escolhida (descrever o menu)", type: "textarea", full: true },
       { name: "horario_servico", label: "Horário do serviço", type: "time" },
       { name: "bebida_alcoolica", label: "Haverá bebida alcoólica?", type: "boolean" },
+      { name: "responsavel_buffet", label: "Responsável pelo buffet", type: "text" },
       { name: "restricoes_alimentares", label: "Restrições alimentares?", type: "boolean" },
       { name: "restricoes_obs", label: "Observações de restrições", type: "textarea", full: true },
-      { name: "responsavel_buffet", label: "Responsável pelo buffet", type: "text" },
     ],
   },
   {
@@ -63,7 +65,6 @@ export const BRIEFING_SECTIONS: BriefingSection[] = [
       { name: "telao", label: "Telão / LED", type: "text" },
       { name: "microfones", label: "Microfones", type: "text" },
       { name: "atracao", label: "DJ / Banda / Atração", type: "text" },
-      { name: "gerador", label: "Gerador", type: "text" },
       { name: "equipamentos_externos", label: "Equipamentos externos", type: "textarea", full: true },
     ],
   },
@@ -72,15 +73,20 @@ export const BRIEFING_SECTIONS: BriefingSection[] = [
     title: "Decoração e Ambientação",
     fields: [
       { name: "decoracao", label: "Haverá decoração / montagem / estrutura?", type: "boolean" },
-      { name: "horario_montagem", label: "Horário de montagem", type: "time" },
       { name: "estilo_decoracao", label: "Estilo da decoração", type: "text" },
       { name: "painel_fotografia", label: "Painel / fotografia", type: "text" },
+      { name: "data_montagem", label: "Montagem — data", type: "date" },
+      { name: "montagem_inicio", label: "Montagem — horário de início", type: "time" },
+      { name: "montagem_termino", label: "Montagem — horário de término", type: "time" },
+      { name: "data_desmontagem", label: "Desmontagem — data", type: "date" },
+      { name: "desmontagem_inicio", label: "Desmontagem — horário de início", type: "time" },
+      { name: "desmontagem_termino", label: "Desmontagem — horário de término", type: "time" },
       { name: "observacoes", label: "Observações importantes", type: "textarea", full: true },
     ],
   },
   {
     id: 5,
-    title: "Equipe Extra Necessária",
+    title: "Equipe Extra Necessária?",
     fields: [
       { name: "credenciamento", label: "Credenciamento?", type: "boolean" },
       { name: "limpeza_durante", label: "Limpeza durante o evento?", type: "boolean" },
@@ -106,36 +112,50 @@ export interface ChecklistItem {
   withWho?: boolean;
 }
 
+export type ChecklistGroup = "auditorio" | "rooftop";
+
 export interface ChecklistBlock {
-  id: "auditorio" | "rooftop";
+  id: string;
+  group: ChecklistGroup;
   title: string;
   items: ChecklistItem[];
+  footer?: { key: string; label: string }[];
 }
 
 export const CHECKLIST_BLOCKS: ChecklistBlock[] = [
   {
     id: "auditorio",
+    group: "auditorio",
     title: "Auditório",
     items: [
       { key: "teste_microfones", label: "Teste de microfones" },
-      { key: "pilhas_microfones", label: "Pilhas de microfones" },
       { key: "teste_som", label: "Teste de som" },
       { key: "teste_telao", label: "Teste do telão" },
-      { key: "teste_projetor", label: "Teste de projetor" },
-      { key: "operador_som", label: "Operador de som / telão" },
+      { key: "teste_totem", label: "Teste de totem digital" },
       { key: "ar_condicionado", label: "Checagem de ar-condicionado" },
       { key: "luzes", label: "Checagem de luzes" },
-      { key: "agua_copa", label: "Checagem de água e copa" },
       { key: "descargas", label: "Checagem de descargas de banheiros" },
       { key: "pias", label: "Verificação de pias de banheiros" },
       { key: "portas_trincos", label: "Verificação de portas e trincos" },
       { key: "recepcionista", label: "Recepcionista" },
-      { key: "limpeza_pre", label: "Limpeza pré-evento", withWho: true },
-      { key: "limpeza_pos", label: "Limpeza pós-evento", withWho: true },
+      { key: "limpeza_pre", label: "Limpeza pré-evento — EXTRA?", withWho: true },
+      { key: "limpeza_pos", label: "Limpeza pós-evento — EXTRA?", withWho: true },
+    ],
+  },
+  {
+    id: "copa_auditorio",
+    group: "auditorio",
+    title: "Copa Auditório",
+    items: [
+      { key: "frigobar", label: "Funcionamento do frigobar" },
+      { key: "gelagua", label: "Checagem de gelágua" },
+      { key: "pia_copa", label: "Verificação da pia da copa" },
+      { key: "copos_descartaveis", label: "Abastecimento de copos descartáveis" },
     ],
   },
   {
     id: "rooftop",
+    group: "rooftop",
     title: "Rooftop",
     items: [
       { key: "teste_televisao", label: "Teste de televisão" },
@@ -143,11 +163,39 @@ export const CHECKLIST_BLOCKS: ChecklistBlock[] = [
       { key: "ar_condicionado", label: "Checagem de ar-condicionado" },
       { key: "descargas", label: "Checagem de descargas de banheiros" },
       { key: "pias", label: "Verificação de pias de banheiros" },
-      { key: "freezer_geladeira", label: "Verificar funcionamento do freezer e geladeira do bar" },
       { key: "portas_trincos", label: "Verificação de portas e trincos" },
       { key: "recepcionista", label: "Recepcionista" },
-      { key: "limpeza_pre", label: "Limpeza pré-evento", withWho: true },
-      { key: "limpeza_pos", label: "Limpeza pós-evento", withWho: true },
+      { key: "limpeza_pre", label: "Limpeza pré-evento — EXTRA?", withWho: true },
+      { key: "limpeza_pos", label: "Limpeza pós-evento — EXTRA?", withWho: true },
+    ],
+  },
+  {
+    id: "rooftop_bar",
+    group: "rooftop",
+    title: "Rooftop — Copa Bar",
+    items: [
+      { key: "freezer_vertical", label: "Funcionamento do freezer vertical" },
+      { key: "ar_bar", label: "Funcionamento do ar do bar" },
+      { key: "pia_bar", label: "Verificação da pia do bar" },
+    ],
+    footer: [{ key: "empresa_contratada", label: "Nome da empresa contratada" }],
+  },
+  {
+    id: "rooftop_copa_aux",
+    group: "rooftop",
+    title: "Rooftop — Copa Auxiliar",
+    items: [
+      { key: "frigobar", label: "Funcionamento do frigobar" },
+      { key: "gelagua", label: "Funcionamento da gelágua" },
+      { key: "airfry", label: "Funcionamento do Airfryer" },
+      { key: "microondas", label: "Funcionamento do micro-ondas" },
+      { key: "pia", label: "Verificação da pia" },
+      { key: "buffet_evento", label: "Buffet contratado para evento" },
+    ],
+    footer: [
+      { key: "buffet_contratado", label: "Buffet contratado" },
+      { key: "buffet_contato", label: "Contato" },
+      { key: "buffet_responsavel", label: "Responsável" },
     ],
   },
 ];
@@ -166,3 +214,14 @@ export function checklistProgress(items: any, block: ChecklistBlock) {
   const done = block.items.filter((it) => items?.[block.id]?.[it.key]).length;
   return { done, total: block.items.length };
 }
+
+export function groupProgress(items: any, group: ChecklistGroup) {
+  return CHECKLIST_BLOCKS.filter((b) => b.group === group).reduce(
+    (acc, b) => {
+      const p = checklistProgress(items, b);
+      return { done: acc.done + p.done, total: acc.total + p.total };
+    },
+    { done: 0, total: 0 }
+  );
+}
+

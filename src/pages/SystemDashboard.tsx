@@ -4,7 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Logo } from "@/components/Logo";
 import { toast } from "sonner";
 import { Plus, Download, LogOut, Search, ArrowRight } from "lucide-react";
-import { ALL_BRIEFING_FIELDS, CHECKLIST_BLOCKS, checklistProgress, computeStatus } from "@/lib/system-fields";
+import { ALL_BRIEFING_FIELDS, groupProgress, computeStatus } from "@/lib/system-fields";
 
 const brand = "#0F3D2E";
 const bg = "#F5EFE4";
@@ -62,11 +62,12 @@ const SystemDashboard = () => {
     };
     const rows = events.map((e) => {
       const cl = checklists[e.id];
-      const aud = checklistProgress(cl?.items ?? {}, CHECKLIST_BLOCKS[0]);
-      const roo = checklistProgress(cl?.items ?? {}, CHECKLIST_BLOCKS[1]);
+      const aud = groupProgress(cl?.items ?? {}, "auditorio");
+      const roo = groupProgress(cl?.items ?? {}, "rooftop");
       const base = cols.map((c) => escape((e as any)[c]));
       return [...base, `${aud.done}/${aud.total}`, `${roo.done}/${roo.total}`, computeStatus(e)].join(",");
     });
+
     const csv = [headers.join(","), ...rows].join("\n");
     const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8;" });
     const url = URL.createObjectURL(blob);
