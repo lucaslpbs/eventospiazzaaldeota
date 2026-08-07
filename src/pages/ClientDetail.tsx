@@ -165,8 +165,9 @@ const ClientDetail = () => {
     nav("/sistema");
   };
 
-  const audProg = useMemo(() => checklistProgress(checklistItems, CHECKLIST_BLOCKS[0]), [checklistItems]);
-  const rooProg = useMemo(() => checklistProgress(checklistItems, CHECKLIST_BLOCKS[1]), [checklistItems]);
+  const audProg = useMemo(() => groupProgress(checklistItems, "auditorio"), [checklistItems]);
+  const rooProg = useMemo(() => groupProgress(checklistItems, "rooftop"), [checklistItems]);
+
 
   if (!ready) return <div className="min-h-screen" style={{ background: bg }} />;
 
