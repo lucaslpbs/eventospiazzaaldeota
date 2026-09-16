@@ -284,7 +284,13 @@ const ClientDetail = () => {
               </div>
             </section>
 
-            {(["auditorio", "rooftop"] as const).map((group) => {
+            {activeGroups.length === 0 && (
+              <section className="rounded-2xl p-6 text-sm text-neutral-600" style={{ background: surface, border: `1px solid ${border}` }}>
+                Selecione o espaço utilizado (Auditório, Rooftop ou os dois) na aba Briefing para carregar o checklist correspondente.
+              </section>
+            )}
+
+            {activeGroups.map((group) => {
               const gProg = group === "auditorio" ? audProg : rooProg;
               return (
                 <div key={group} className="space-y-4">
