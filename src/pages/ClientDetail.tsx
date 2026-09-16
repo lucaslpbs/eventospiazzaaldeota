@@ -170,6 +170,16 @@ const ClientDetail = () => {
   const audProg = useMemo(() => groupProgress(checklistItems, "auditorio"), [checklistItems]);
   const rooProg = useMemo(() => groupProgress(checklistItems, "rooftop"), [checklistItems]);
 
+  const activeGroups = useMemo(() => {
+    const local = String(event?.local_evento ?? "").toLowerCase();
+    const aud = local.includes("auditó") || local.includes("audito");
+    const roo = local.includes("rooftop");
+    const groups: ("auditorio" | "rooftop")[] = [];
+    if (aud) groups.push("auditorio");
+    if (roo) groups.push("rooftop");
+    return groups;
+  }, [event?.local_evento]);
+
 
   if (!ready) return <div className="min-h-screen" style={{ background: bg }} />;
 
