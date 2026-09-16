@@ -170,6 +170,16 @@ const ClientDetail = () => {
   const audProg = useMemo(() => groupProgress(checklistItems, "auditorio"), [checklistItems]);
   const rooProg = useMemo(() => groupProgress(checklistItems, "rooftop"), [checklistItems]);
 
+  const activeGroups = useMemo(() => {
+    const local = String(event?.local_evento ?? "").toLowerCase();
+    const aud = local.includes("auditó") || local.includes("audito");
+    const roo = local.includes("rooftop");
+    const groups: ("auditorio" | "rooftop")[] = [];
+    if (aud) groups.push("auditorio");
+    if (roo) groups.push("rooftop");
+    return groups;
+  }, [event?.local_evento]);
+
 
   if (!ready) return <div className="min-h-screen" style={{ background: bg }} />;
 
@@ -274,7 +284,13 @@ const ClientDetail = () => {
               </div>
             </section>
 
-            {(["auditorio", "rooftop"] as const).map((group) => {
+            {activeGroups.length === 0 && (
+              <section className="rounded-2xl p-6 text-sm text-neutral-600" style={{ background: surface, border: `1px solid ${border}` }}>
+                Selecione o espaço utilizado (Auditório, Rooftop ou os dois) na aba Briefing para carregar o checklist correspondente.
+              </section>
+            )}
+
+            {activeGroups.map((group) => {
               const gProg = group === "auditorio" ? audProg : rooProg;
               return (
                 <div key={group} className="space-y-4">
